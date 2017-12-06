@@ -4,15 +4,18 @@ import static gameGUI.Constants.*;
 import brickbreak.*;
 import gameGUI.asset.*;
 
+import javafx.util.Duration;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
-import javafx.util.Duration;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Font;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -42,6 +45,9 @@ public class GameplaySingleton extends Scene {
     private ArcButton[] buttons = { new ArcButton("About/Pause", WINDOW_WIDE*0.4),
                                     new ArcButton(" ", WINDOW_WIDE*0.2),
                                     new ArcButton("Save and Return", WINDOW_WIDE*0.4) };
+    private Stage primaryStage;
+    private ConfirmationScene loseScene;
+    private ConfirmationScene winScene;
 
     private Timeline animate = new Timeline(new KeyFrame(Duration.millis(20), e -> run()));
 
@@ -85,6 +91,21 @@ public class GameplaySingleton extends Scene {
         setOnMouseClicked(e -> execPower());
         setOnMouseMoved(e -> paddle.xFromScene(e.getSceneX()));
         animate.setCycleCount(Timeline.INDEFINITE);
+
+        // Extra: Win/Lose scene setup
+        loseScene = new ConfirmationScene("YOU LOSE", true);
+        winScene = new ConfirmationScene("YOU BEAT GAME YAY", true);
+        loseScene.getText().setFont(Font.font("sans-serif", FontWeight.BLACK, 60));
+        winScene.getText().setFont(Font.font("sans-serif", FontWeight.BLACK, 60));
+        loseScene.setOnBack(e -> {
+            setNewGame();
+            primaryStage.setScene(this);
+            go(); });
+        winScene.setOnBack(e -> {
+            setNewGame();
+            primaryStage.setScene(this);
+            go();
+        });
     }
 
 
@@ -152,21 +173,26 @@ public class GameplaySingleton extends Scene {
     private void loseLife() {
         lives--;
         resetGame();
-
-        animate.pause();
-        try { TimeUnit.SECONDS.sleep(1); }
-        catch (InterruptedException e) { e.getMessage(); }
-        animate.play();
-
         if (lives <= 0) loseGame();
-
+        else {
+            animate.pause();
+            try { TimeUnit.SECONDS.sleep(1); }
+            catch (InterruptedException e) { e.getMessage(); }
+            animate.play();
+        }
     }
     private void loseGame() {
-        System.out.println("YOU LOSE");
+        stop();
+        primaryStage.setScene(loseScene);
     }
     private void winGame() {
-        System.out.println("WINNER WINNER CHICKEN DINNER?");
+        stop();
+        primaryStage.setScene(winScene);
     }
+
+    // This needs work to make more elegant, but I dont know how else
+    // to do it at the moment
+    public void setStage(Stage ps) { primaryStage = ps; }
 
     private void execPower() {
         switch (power) {

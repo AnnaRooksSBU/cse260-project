@@ -1,6 +1,26 @@
-<project default="compile">
-    <target name="compile">
-        <mkdir dir="bin"/>
-        <javac srcdir="src" destdir="bin"/>
+<project default = "run">
+    <target name = "compile">
+        <mkdir dir = "bin/classes"/>
+        <javac srcdir = "src"
+            destdir = "bin/classes"
+            excludes = "**/*Legacy.java"
+            includeantruntime = "false"/>
+    </target>
+
+    <target name = "build"
+        depends = "compile">
+        <jar destfile = "bin/build.jar"
+            basedir = "bin/classes">
+
+            <manifest>
+                <attribute name = "Main-Class" value = "BreakoutGame"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name = "run"
+        depends = "build">
+        <java jar = "bin/build.jar"
+            fork = "true"/>
     </target>
 </project>

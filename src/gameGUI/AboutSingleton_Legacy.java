@@ -31,12 +31,6 @@ public class AboutSingleton extends Scene {
         root.getChildren().add(buttonPane);
     }
 
-    // Quick helper method for button styles
-    private String btStyle(String col) {
-       return "-fx-background-color: " +col+ ";"
-            + "-fx-text-fill: " +COLOR_TEXT+ ";";
-    }
-
     public void setOnBack(EventHandler<ActionEvent> handler) {
         backButton.setOnAction(handler);
     }
