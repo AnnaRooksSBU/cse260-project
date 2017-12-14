@@ -3,35 +3,27 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
+import java.util.Scanner;
+
 import gameGUI.*;
 
 public class BreakoutGame extends Application {
     @Override // Start method in Application class
     public void start(Stage primaryStage) throws Exception {
+
+        String aboutText;
+        // "Stupid Scanner Tricks"
+        // https://community.oracle.com/blogs/pat/2004/10/23/stupid-scanner-tricks
+        try (Scanner sc = new Scanner(getClass().getResourceAsStream("resources/aboutText.txt"),"UTF-8")) {
+            aboutText = sc.useDelimiter("\\A").hasNext() ? sc.next() : "";
+        }
+
+        // Scene creation
         SplashSingleton splashScene = SplashSingleton.getInstance();
         GameplaySingleton gameScene = GameplaySingleton.getInstance();
-        gameScene.setStage(primaryStage);
-        ConfirmationScene aboutScene = new ConfirmationScene(
-            "\tThis game is based off the game \"Breakout\" published by Atari, Inc. " +
-            "The goal is to destroy all the bricks on the field, by returning the ball with the paddle, " +
-            "which is controlled by the mouse. " +
-            "There are two types of bricks: power bricks and tough bricks. " +
-            "Tough bricks have toughness, changing the number of times they need to be hit to destroy. " +
-            "Power bricks have one toughness, and grant a power up comprised of a single letter when destroyed\n\n\n" +
-            "\tPower bricks have a gold border, and have different colors inside to distinguish power ups:\n\n" +
-            "- WHITE: 'C'lears a row\n" +
-            "- RED: 'D'amages all bricks by one\n" +
-            "- GREEN: 'L'ife is gained\n" +
-            "- YELLOW: 'P'ower is doubled (damage)\n" +
-            "- LIGHT BLUE: 'R'acket width is increased\n" +
-            "- BLUE: 'S'peed of ball is reduced",
-        false);
-        aboutScene.getText().setFont(Font.font("sans-serif", 20));
+        ConfirmationScene aboutScene = new ConfirmationScene(aboutText,false);
 
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
-        primaryStage.setTitle("Breakout! Breakout!");
-        primaryStage.setScene(splashScene);
-
+        // Splash Screen Setup
         splashScene.setButtonOnAction(0, e -> {
             gameScene.setNewGame();
             primaryStage.setScene(gameScene);
@@ -48,6 +40,8 @@ public class BreakoutGame extends Application {
         });
         splashScene.setButtonOnAction(3, e -> primaryStage.close());
 
+        // Game Scene Setup
+        gameScene.setStage(primaryStage);
         gameScene.setButtonOnAction(0, e -> {
             gameScene.stop();
             primaryStage.setScene(aboutScene);
@@ -62,6 +56,13 @@ public class BreakoutGame extends Application {
             primaryStage.setScene(splashScene);
         });
 
+        // About Scene Setup
+        aboutScene.getText().setFont(Font.font("sans-serif", 20));
+
+        // Stage setup
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("resources/icon.png")));
+        primaryStage.setTitle("Breakout! Breakout!");
+        primaryStage.setScene(splashScene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
