@@ -22,7 +22,7 @@ All information in this section, as well as the list of power ups, can be viewed
 | Blue    |  `S`   | Speed of the ball is reduced |
 
 ## Level Editing
-While there are currently three levels built into the game, the game can be fairly easily modified to contain custom levels instead. The levels are stored in [the `lvs` folder](src/brickbreak/lvs/).
+While there are currently three levels built into the game, the game can be fairly easily modified to contain custom levels instead. The levels are stored in [the `lvs` folder](bin/classes/brickbreak/lvs/).
 
 Without modification to the source, there can only be three levels, named `0`, `1`, and `2`. The names of the level files, the number of levels, and the order of the levels can be changed in the [Level class](src/brickbreak/Level.java), as they are stored as a simple `String` array.
 
