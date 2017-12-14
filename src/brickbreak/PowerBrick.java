@@ -18,13 +18,13 @@ public class PowerBrick extends Brick {
     // Color assignment helper method
     private Color getColor() {
         switch (power) {
-            case 'c': return Color.SNOW;       // Clear row
-            case 'd': return Color.RED;        // Damage all
-            case 'f': return Color.BLACK;      // FF7: Super Nova
-            case 'l': return Color.GREEN;      // Life gain
-            case 'p': return Color.YELLOW;     // Power double
-            case 'r': return Color.DODGERBLUE; // Racket width
-            case 's': return Color.BLUE;       // Speed reduction
+            case 'C': return Color.SNOW;       // Clear row
+            case 'D': return Color.RED;        // Damage all
+            case 'F': return Color.BLACK;      // FF7: Super Nova
+            case 'L': return Color.GREEN;      // Life gain
+            case 'P': return Color.YELLOW;     // Power double
+            case 'R': return Color.DODGERBLUE; // Racket width
+            case 'S': return Color.BLUE;       // Speed reduction
         }
         return Color.FUCHSIA; // Default error color
     }

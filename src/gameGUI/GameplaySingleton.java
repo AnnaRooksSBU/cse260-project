@@ -197,17 +197,17 @@ public class GameplaySingleton extends Scene {
     private void execPower() {
         switch (power) {
             case ' ': break; // No power
-            case 'c': brickPane.clearRow();
+            case 'C': brickPane.clearRow();
                       break; // Clear row
-            case 'd': brickPane.damageAll();
+            case 'D': brickPane.damageAll();
                       break; // Damage all
-            case 'f': bosep();
+            case 'F': bosep();
                       break; // FF7: SN
-            case 'l': lives++; updateStats();
+            case 'L': lives++; updateStats();
                       break; // Life gain
-            case 'p': ball.doublePower();
+            case 'P': ball.doublePower();
                       break; // Power doubles
-            case 'r': paddle.setWidth(paddle.getWidth()+50);
+            case 'R': paddle.setWidth(paddle.getWidth()+50);
                       break; // Racket width
         }
         // in case of unknown power, nothing happens and power is reset

@@ -20,3 +20,28 @@ All information in this section, as well as the list of power ups, can be viewed
 | Yellow  |  `P`   | Ball's power is doubled      |
 | L. Blue |  `R`   | Paddle's width is increased  |
 | Blue    |  `S`   | Speed of the ball is reduced |
+
+## Level Editing
+While there are currently three levels built into the game, the game can be fairly easily modified to contain custom levels instead. The levels are stored in [the `lvs` folder](src/brickbreak/lvs/).
+
+Without modification to the source, there can only be three levels, named `0`, `1`, and `2`. The names of the level files, the number of levels, and the order of the levels can be changed in the [Level class](src/brickbreak/Level.java), as they are stored as a simple `String` array.
+
+### Level Formatting
+The level files are simple text files, containing 10 lines of 10 characters each. Example:
+```
+----------
+-99--99--D
+88--88--88
+7--77--C7-
+--66--66--
+-55--L5--5
+44--44--44
+3--R3--33-
+--22--22--
+-P1--11--1
+```
+The `-` characters represent empty spaces in the field, each number `n` represents a regular brick with `n` toughness, and the remaining characters represent power bricks.
+
+Power bricks are associated with the power from the table above, but if there is an unknown power, the brick will display as a pink power brick, but has no effect.
+
+Without somewhat heavy modification, it is not easy to have a edit a level with dimensions other than 10x10 bricks, or custom power bricks. These may be documented later, although you are free to try on your own.
